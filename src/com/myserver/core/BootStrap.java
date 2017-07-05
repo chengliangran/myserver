@@ -41,9 +41,7 @@ public class BootStrap {
                 socket= server.accept();
                 HttpProcessor processor=getPocessor();
                 processor.asign(socket);
-                System.out.println("ceshi");
                 processor.process();
-                System.out.println("ceshiwanbi");
             }
         } catch (IOException e) {
             e.printStackTrace();
