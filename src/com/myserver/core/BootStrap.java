@@ -1,5 +1,7 @@
 package com.myserver.core;
 
+import com.myserver.core.pipeline.Context;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -16,19 +18,19 @@ public class BootStrap {
 //    套接字工厂
     ServerSocket server=null;
     Socket socket=null;
-
 //    处理者
     List<HttpProcessor> processors=new ArrayList();
     int min=10;
     int max=30;
     int current=0;
-
+//容器
+    Container container;
     public BootStrap(){
         while (processors.size()<min){
             addProcessor();
           }
+        container=assemble();
     }
-
 
     public static void main(String[] args) {
         new BootStrap().handle();
@@ -72,7 +74,10 @@ public class BootStrap {
         processors.add(processor);
     }
 
-
+    public Container assemble(){
+        container=new Context();
+        return null;
+    }
 
 
 }

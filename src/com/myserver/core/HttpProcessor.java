@@ -1,8 +1,7 @@
 package com.myserver.core;
 
-import com.chengliangran.components.HttpRequest;
-import com.chengliangran.components.HttpResponse;
-import jdk.nashorn.internal.runtime.linker.Bootstrap;
+import com.myserver.components.HttpRequest;
+import com.myserver.components.HttpResponse;
 
 import java.io.IOException;
 import java.io.InputStream;

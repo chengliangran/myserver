@@ -1,6 +1,5 @@
-package com.chengliangran.components;
+package com.myserver.components;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
