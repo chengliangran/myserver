@@ -3,16 +3,24 @@ package com.myserver.core.pipeline;
 import com.myserver.components.HttpRequest;
 import com.myserver.components.HttpResponse;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017-07-06.
  */
 public class SimplePipeline implements Pipeline {
     //测试
-    Valve[] valves;
+    List<Valve> valves=new ArrayList<>();
+    Valve basic=new BasicValve();
+    ValveContext valveContext=new ValveContext();
 
 
     @Override
     public void invoke(HttpRequest request, HttpResponse response) {
+        System.out.println("pipeline开始启动唤醒valvecontext");
+        valveContext.invovleNext(request,response);
 
     }
 
@@ -44,5 +52,16 @@ public class SimplePipeline implements Pipeline {
     @Override
     public void getBasicValve() {
 
+    }
+    class ValveContext{
+        int index=0;
+        public void invovleNext(HttpRequest request,HttpResponse response){
+            System.out.println("我是");
+            if (index<valves.size()){
+                 valves.get(index).invoke(request,response,this);
+            }else {
+                 basic.invoke(request,response,this);
+            }
+        }
     }
 }

@@ -63,6 +63,10 @@ public class HttpProcessor implements Runnable {
                     }
                 }
                 request.setParameters(headValues);
+                if ((Context)(bootstrap.getContainer())!=null){
+                    bootstrap.getContainer().invoke(request,response);
+                 }
+                 socket.close();
              }else {
                 throw new Exception("没有解析到任何内容");
             }

@@ -1,5 +1,7 @@
 package com.myserver.components;
 
+import com.myserver.core.Container;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +14,18 @@ public class HttpRequest {
     String url;
     String method;
     String protocal;
+    String queryString;
+    String jsessionid;
+    Container container;
+
+    public Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
+    }
+
     Map<String,String> parameters=new HashMap<>();
     String attribute;
 

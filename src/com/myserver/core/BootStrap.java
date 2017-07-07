@@ -1,15 +1,10 @@
 package com.myserver.core;
 
-import com.myserver.core.pipeline.Context;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017-07-04.
@@ -25,6 +20,11 @@ public class BootStrap {
     int current=0;
 //容器
     Container container;
+
+    public Container getContainer() {
+        return container;
+    }
+
     public BootStrap(){
         while (processors.size()<min){
             addProcessor();
@@ -42,8 +42,12 @@ public class BootStrap {
             while (true){
                 socket= server.accept();
                 HttpProcessor processor=getPocessor();
-                processor.asign(socket);
-                processor.process();
+                if (processor!=null){
+                    processor.asign(socket);
+                    processor.process();
+                }else {
+                    socket.close();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
