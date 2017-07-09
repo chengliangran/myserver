@@ -13,11 +13,11 @@ import java.util.Map;
  * Created by Administrator on 2017-07-05.
  */
 public class HttpProcessor implements Runnable {
-    BootStrap bootstrap=null;
+    Connector bootstrap=null;
 
     Socket socket=null;
 
-    HttpProcessor(BootStrap bootStrap){
+    HttpProcessor(Connector bootStrap){
         this.bootstrap=bootStrap;
     }
 
@@ -42,6 +42,7 @@ public class HttpProcessor implements Runnable {
             byte[] buf=new byte[2048];
             is.read(buf);
             String message=new String(buf,0,buf.length);
+            System.out.println("打印socket内容"+message);
             Map<String,String> headValues=new HashMap<>();
             String[] lines=message.split("\r\n");
             if (lines.length>0){
@@ -54,6 +55,7 @@ public class HttpProcessor implements Runnable {
                     request.setUrl(reqFields[1]);
                     request.setProtocal(reqFields[2]);
                 }else {
+                    System.out.println(reqFields[0]+"---");
                     throw new Exception("请求行不符合http标准");
                 }
                 for (String line : lines) {
@@ -66,6 +68,15 @@ public class HttpProcessor implements Runnable {
                 if ((Context)(bootstrap.getContainer())!=null){
                     bootstrap.getContainer().invoke(request,response);
                  }
+                System.out.println("开始发送返回结果");
+                 String resp="HTTP/1.1 2OO OK\n" +
+                         "Server: Microsoft-IIS/4.0\n" +
+                         "Date: Mon,  5 Jan 2004 13:13:33 GHT\n" +
+                         "Content -Type:  text/html\n" +
+                         "Last-Modified:Mon,  5 Jan 2004 13:13:12 GMT\n" +
+                         "Content-Length: 112";
+                 socket.getOutputStream().write(resp.getBytes());
+
                  socket.close();
              }else {
                 throw new Exception("没有解析到任何内容");

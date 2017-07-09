@@ -8,6 +8,16 @@ import com.myserver.core.Container;
  */
 public class Wrapper implements Container{
 
+    String servletClass;
+
+    public String getServletClass() {
+        return servletClass;
+    }
+
+    public void setServletClass(String servletClass) {
+        this.servletClass = servletClass;
+    }
+
     @Override
     public void invoke(HttpRequest request, HttpResponse response) {
 

@@ -56,8 +56,7 @@ public class SimplePipeline implements Pipeline {
     class ValveContext{
         int index=0;
         public void invovleNext(HttpRequest request,HttpResponse response){
-            System.out.println("我是");
-            if (index<valves.size()){
+             if (index<valves.size()){
                  valves.get(index).invoke(request,response,this);
             }else {
                  basic.invoke(request,response,this);

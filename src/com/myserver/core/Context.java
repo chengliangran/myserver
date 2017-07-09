@@ -72,7 +72,16 @@ public class Context implements Container,Pipeline {
 
     @Override
     public void addChild(Container container) {
-
+        if (wrappers==null){
+            wrappers=new Wrapper[1];
+            wrappers[wrappers.length-1]=container;
+        }else {
+            Container[] tempWrappers=new Wrapper[wrappers.length+1];
+            for (int i = 0; i < tempWrappers.length-1; i++) {
+                tempWrappers[i]=wrappers[i];
+            }
+            tempWrappers[tempWrappers.length-1]=container;
+         }
     }
 
     @Override
@@ -83,8 +92,13 @@ public class Context implements Container,Pipeline {
     @Override
     public Container findChild(String name) {
         Wrapper[] wrapper= (Wrapper[]) findChildren();
+        System.out.println("wrappper的长度是"+wrapper.length);
+        for (Wrapper wrapper1 : wrapper) {
+            if (("/"+((Container)wrapper1).getName()).equals(name)){
+                return wrapper1;
+            }
+        }
         return null;
-
     }
 
     @Override
@@ -116,12 +130,12 @@ public class Context implements Container,Pipeline {
 
     @Override
     public void addLogger(Logger logger) {
-
+        this.logger=logger;
     }
 
     @Override
     public Logger getLogger() {
-        return null;
+        return logger;
     }
 
     @Override
